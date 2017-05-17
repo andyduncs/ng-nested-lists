@@ -231,3 +231,114 @@ angular.equals( {a: 1}, {a: 1, b: function() {
 }
 })
 === true
+
+
+
+
+<body ng-apps="example">
+    <div ng-controller="ExampleController">
+        <button ng-click="loadData()">Load</button>
+        <button ng-click="saveData()">Save</button>                
+          <br />
+          Message: {{ myObj.firstname }}  
+    </div>
+</body>
+
+
+
+<!--Angular Controller function-->
+
+example.controller("ExampleController", function($scope, $localStorage){
+
+    $scope.saveDate = function(){
+        var myObj = {
+            firstname: "andy", - Need to load checked user location
+            lastname: "Duncan"
+        }
+        $localStorage.myObj = myObj;
+    //    window.localStorage.set("myObj", JSON.stringify(myObj)); Serialise the object in to JSON
+    }
+
+    $scope.loadData = function() {
+        $scope.message = $localStorage.message; - Load data for the listing, still need to compare to location ID
+    //    $scope.myObj = JSON.parse(window.localStorage.get("myObj"));
+    }
+
+})
+
+var myApp = angular.module("myModule", [])  - Also can add external dependecies to other modules
+
+var myController = function($scope) {
+    $scope.message = 'Angular';
+};
+
+myApp.controller("myController", myController) passing the var function as a parameter
+
+
+Alternative method
+
+
+var myApp = angular.module("myModule", [])  - Also can add external dependecies to other modules
+
+myApp.controller("myController", myController){
+    $scope.message = 'Angular';
+};
+
+
+html
+
+    div(ng-controller="myController") - below message needs the controller otherwsie unavailable
+
+        {{ message }}
+
+
+
+        Chgeckbox data-binding
+
+        div(ng-app='value_app' ng-controller='value_controller')
+
+        checkbox(ng-model="location")
+
+            button(ng-click="show_value()")Show value
+
+            method
+
+            var app = angular.module( 'value_app', [] );
+
+            app.controller('value_controller', function($scope{
+                
+                //function that needs to go inside controller
+                
+                $scope.show_value = function(){
+                    alert($scope.location);
+                }
+            });
+
+
+
+localstorage remains after session has ended
+
+
+data saved is array
+
+
+
+https://jsfiddle.net/c0jay71d/
+
+
+
+
+JSON parse as string
+
+function OutputTotals() {
+  var output1 = JSON.parse(sessionStorage.getItem("TotalA"));
+  var output2 = JSON.parse(sessionStorage.getItem("TotalB"));
+  var totaloutput = output1 + output2;
+  $("#TotalOutput").html(totaloutput);
+}
+
+
+
+
+
+
